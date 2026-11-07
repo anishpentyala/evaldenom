@@ -1,0 +1,717 @@
+{
+  "version": 3,
+  "timestamp": "2026-11-07T01:50:30.710Z",
+  "prompts": [
+    {
+      "id": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+      "raw": "{{question}}",
+      "label": "{{question}}",
+      "provider": "local-fixed-synthetic",
+      "metrics": {
+        "score": 2,
+        "testPassCount": 2,
+        "testFailCount": 2,
+        "testErrorCount": 2,
+        "testCacheHitCount": 0,
+        "assertPassCount": 2,
+        "assertFailCount": 2,
+        "totalLatencyMs": 4,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 6,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "namedScores": {},
+        "namedScoresCount": {},
+        "namedScoreWeights": {},
+        "cost": 0
+      }
+    }
+  ],
+  "results": [
+    {
+      "cost": 0,
+      "gradingResult": {
+        "pass": true,
+        "score": 1,
+        "reason": "All assertions passed",
+        "namedScores": {},
+        "tokensUsed": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0
+        },
+        "componentResults": [
+          {
+            "pass": true,
+            "score": 1,
+            "reason": "Assertion passed",
+            "assertion": {
+              "type": "equals",
+              "value": "OK"
+            }
+          }
+        ]
+      },
+      "id": "6c0eb9d9-7a87-4e16-bf20-3128fba1a6fa",
+      "latencyMs": 3,
+      "namedScores": {},
+      "prompt": {
+        "raw": "easy",
+        "label": "{{question}}",
+        "config": {}
+      },
+      "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+      "promptIdx": 0,
+      "repeatGroupId": "test-0-vars-0",
+      "repeatIndex": 0,
+      "provider": {
+        "id": "local-fixed-synthetic"
+      },
+      "response": {
+        "output": "OK"
+      },
+      "score": 1,
+      "success": true,
+      "testCase": {
+        "vars": {
+          "question": "easy"
+        },
+        "metadata": {
+          "external_case_id": "easy"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      "testIdx": 0,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "vars": {
+        "question": "easy"
+      },
+      "metadata": {
+        "external_case_id": "easy",
+        "_promptfooFileMetadata": {}
+      },
+      "failureReason": 0
+    },
+    {
+      "cost": 0,
+      "gradingResult": {
+        "pass": true,
+        "score": 1,
+        "reason": "All assertions passed",
+        "namedScores": {},
+        "tokensUsed": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0
+        },
+        "componentResults": [
+          {
+            "pass": true,
+            "score": 1,
+            "reason": "Assertion passed",
+            "assertion": {
+              "type": "equals",
+              "value": "OK"
+            }
+          }
+        ]
+      },
+      "id": "08d52648-fad7-490f-a761-25bd89355b3a",
+      "latencyMs": 1,
+      "namedScores": {},
+      "prompt": {
+        "raw": "easy",
+        "label": "{{question}}",
+        "config": {}
+      },
+      "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+      "promptIdx": 0,
+      "repeatGroupId": "test-0-vars-0",
+      "repeatIndex": 1,
+      "provider": {
+        "id": "local-fixed-synthetic"
+      },
+      "response": {
+        "output": "OK"
+      },
+      "score": 1,
+      "success": true,
+      "testCase": {
+        "vars": {
+          "question": "easy"
+        },
+        "metadata": {
+          "external_case_id": "easy"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      "testIdx": 1,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "vars": {
+        "question": "easy"
+      },
+      "metadata": {
+        "external_case_id": "easy",
+        "_promptfooFileMetadata": {}
+      },
+      "failureReason": 0
+    },
+    {
+      "cost": 0,
+      "error": "Expected output \"NO\" to equal \"OK\"",
+      "gradingResult": {
+        "pass": false,
+        "score": 0,
+        "reason": "Expected output \"NO\" to equal \"OK\"",
+        "namedScores": {},
+        "tokensUsed": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0
+        },
+        "componentResults": [
+          {
+            "pass": false,
+            "score": 0,
+            "reason": "Expected output \"NO\" to equal \"OK\"",
+            "assertion": {
+              "type": "equals",
+              "value": "OK"
+            }
+          }
+        ]
+      },
+      "id": "3aaad138-4d4d-458b-b503-aac61182510f",
+      "latencyMs": 0,
+      "namedScores": {},
+      "prompt": {
+        "raw": "hard",
+        "label": "{{question}}",
+        "config": {}
+      },
+      "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+      "promptIdx": 0,
+      "repeatGroupId": "test-1-vars-0",
+      "repeatIndex": 0,
+      "provider": {
+        "id": "local-fixed-synthetic"
+      },
+      "response": {
+        "output": "NO"
+      },
+      "score": 0,
+      "success": false,
+      "testCase": {
+        "vars": {
+          "question": "hard"
+        },
+        "metadata": {
+          "external_case_id": "hard"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      "testIdx": 2,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "vars": {
+        "question": "hard"
+      },
+      "metadata": {
+        "external_case_id": "hard",
+        "_promptfooFileMetadata": {}
+      },
+      "failureReason": 1
+    },
+    {
+      "cost": 0,
+      "error": "Expected output \"NO\" to equal \"OK\"",
+      "gradingResult": {
+        "pass": false,
+        "score": 0,
+        "reason": "Expected output \"NO\" to equal \"OK\"",
+        "namedScores": {},
+        "tokensUsed": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0
+        },
+        "componentResults": [
+          {
+            "pass": false,
+            "score": 0,
+            "reason": "Expected output \"NO\" to equal \"OK\"",
+            "assertion": {
+              "type": "equals",
+              "value": "OK"
+            }
+          }
+        ]
+      },
+      "id": "4e3e4092-08cb-4f84-905b-dc4ebea9c12b",
+      "latencyMs": 0,
+      "namedScores": {},
+      "prompt": {
+        "raw": "hard",
+        "label": "{{question}}",
+        "config": {}
+      },
+      "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+      "promptIdx": 0,
+      "repeatGroupId": "test-1-vars-0",
+      "repeatIndex": 1,
+      "provider": {
+        "id": "local-fixed-synthetic"
+      },
+      "response": {
+        "output": "NO"
+      },
+      "score": 0,
+      "success": false,
+      "testCase": {
+        "vars": {
+          "question": "hard"
+        },
+        "metadata": {
+          "external_case_id": "hard"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      "testIdx": 3,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "vars": {
+        "question": "hard"
+      },
+      "metadata": {
+        "external_case_id": "hard",
+        "_promptfooFileMetadata": {}
+      },
+      "failureReason": 1
+    },
+    {
+      "cost": 0,
+      "error": "synthetic local provider failure",
+      "gradingResult": null,
+      "id": "afa9f0ad-5e24-4988-baf8-68df9a5150dc",
+      "latencyMs": 0,
+      "namedScores": {},
+      "prompt": {
+        "raw": "broken",
+        "label": "{{question}}",
+        "config": {}
+      },
+      "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+      "promptIdx": 0,
+      "repeatGroupId": "test-2-vars-0",
+      "repeatIndex": 0,
+      "provider": {
+        "id": "local-fixed-synthetic"
+      },
+      "response": {
+        "error": "synthetic local provider failure"
+      },
+      "score": 0,
+      "success": false,
+      "testCase": {
+        "vars": {
+          "question": "broken"
+        },
+        "metadata": {
+          "external_case_id": "broken"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      "testIdx": 4,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "vars": {
+        "question": "broken"
+      },
+      "metadata": {
+        "external_case_id": "broken",
+        "_promptfooFileMetadata": {}
+      },
+      "failureReason": 2
+    },
+    {
+      "cost": 0,
+      "error": "synthetic local provider failure",
+      "gradingResult": null,
+      "id": "4bb45ab1-aacc-4d76-b0c3-c4f5dedf39de",
+      "latencyMs": 0,
+      "namedScores": {},
+      "prompt": {
+        "raw": "broken",
+        "label": "{{question}}",
+        "config": {}
+      },
+      "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+      "promptIdx": 0,
+      "repeatGroupId": "test-2-vars-0",
+      "repeatIndex": 1,
+      "provider": {
+        "id": "local-fixed-synthetic"
+      },
+      "response": {
+        "error": "synthetic local provider failure"
+      },
+      "score": 0,
+      "success": false,
+      "testCase": {
+        "vars": {
+          "question": "broken"
+        },
+        "metadata": {
+          "external_case_id": "broken"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      "testIdx": 5,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "vars": {
+        "question": "broken"
+      },
+      "metadata": {
+        "external_case_id": "broken",
+        "_promptfooFileMetadata": {}
+      },
+      "failureReason": 2
+    }
+  ],
+  "stats": {
+    "successes": 2,
+    "failures": 2,
+    "errors": 2,
+    "tokenUsage": {
+      "prompt": 0,
+      "completion": 0,
+      "cached": 0,
+      "total": 0,
+      "numRequests": 6,
+      "completionDetails": {
+        "reasoning": 0,
+        "acceptedPrediction": 0,
+        "rejectedPrediction": 0,
+        "cacheReadInputTokens": 0,
+        "cacheCreationInputTokens": 0
+      },
+      "assertions": {
+        "total": 0,
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "numRequests": 0,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        }
+      }
+    },
+    "durationMs": 50,
+    "evaluationDurationMs": 50
+  },
+  "repeatStability": {
+    "totalGroups": 3,
+    "unstableGroups": 0,
+    "groupsWithErrors": 1,
+    "cachedResults": 0,
+    "groups": [
+      {
+        "repeatGroupId": "test-0-vars-0",
+        "promptIdx": 0,
+        "provider": {
+          "id": "local-fixed-synthetic"
+        },
+        "promptLabel": "{{question}}",
+        "repetitions": 2,
+        "passed": 2,
+        "failed": 0,
+        "errors": 0,
+        "cached": 0,
+        "unstable": false,
+        "passRate": 1,
+        "passRateConfidenceInterval": {
+          "confidenceLevel": 0.95,
+          "lower": 0.34238022750665303,
+          "upper": 1
+        }
+      },
+      {
+        "repeatGroupId": "test-1-vars-0",
+        "promptIdx": 0,
+        "provider": {
+          "id": "local-fixed-synthetic"
+        },
+        "promptLabel": "{{question}}",
+        "repetitions": 2,
+        "passed": 0,
+        "failed": 2,
+        "errors": 0,
+        "cached": 0,
+        "unstable": false,
+        "passRate": 0,
+        "passRateConfidenceInterval": {
+          "confidenceLevel": 0.95,
+          "lower": 0,
+          "upper": 0.6576197724933469
+        }
+      },
+      {
+        "repeatGroupId": "test-2-vars-0",
+        "promptIdx": 0,
+        "provider": {
+          "id": "local-fixed-synthetic"
+        },
+        "promptLabel": "{{question}}",
+        "repetitions": 2,
+        "passed": 0,
+        "failed": 0,
+        "errors": 2,
+        "cached": 0,
+        "unstable": false
+      }
+    ]
+  }
+}
