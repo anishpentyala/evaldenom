@@ -1,0 +1,854 @@
+{
+  "evalId": "eval-Ta1-2026-11-07T01:50:43",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-11-07T01:50:43.880Z",
+    "prompts": [
+      {
+        "id": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+        "raw": "{{question}}",
+        "label": "{{question}}",
+        "provider": "local-synthetic-baseline",
+        "metrics": {
+          "score": 2,
+          "testPassCount": 2,
+          "testFailCount": 4,
+          "testErrorCount": 0,
+          "testCacheHitCount": 0,
+          "assertPassCount": 2,
+          "assertFailCount": 4,
+          "totalLatencyMs": 3,
+          "tokenUsage": {
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "total": 0,
+            "numRequests": 6,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "equals",
+                "value": "OK"
+              }
+            }
+          ]
+        },
+        "id": "e816a704-84fa-4313-a480-1e196013c385",
+        "latencyMs": 2,
+        "namedScores": {},
+        "prompt": {
+          "raw": "easy",
+          "label": "{{question}}",
+          "config": {}
+        },
+        "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+        "promptIdx": 0,
+        "repeatGroupId": "test-0-vars-0",
+        "repeatIndex": 0,
+        "provider": {
+          "id": "local-synthetic-baseline"
+        },
+        "response": {
+          "output": "OK"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "vars": {
+            "question": "easy"
+          },
+          "metadata": {
+            "external_case_id": "easy"
+          },
+          "options": {
+            "repeat": 2
+          },
+          "assert": [
+            {
+              "type": "equals",
+              "value": "OK"
+            }
+          ]
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "question": "easy"
+        },
+        "metadata": {
+          "external_case_id": "easy",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "equals",
+                "value": "OK"
+              }
+            }
+          ]
+        },
+        "id": "c594c358-327c-4265-af1e-3103a2b01095",
+        "latencyMs": 0,
+        "namedScores": {},
+        "prompt": {
+          "raw": "easy",
+          "label": "{{question}}",
+          "config": {}
+        },
+        "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+        "promptIdx": 0,
+        "repeatGroupId": "test-0-vars-0",
+        "repeatIndex": 1,
+        "provider": {
+          "id": "local-synthetic-baseline"
+        },
+        "response": {
+          "output": "OK"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "vars": {
+            "question": "easy"
+          },
+          "metadata": {
+            "external_case_id": "easy"
+          },
+          "options": {
+            "repeat": 2
+          },
+          "assert": [
+            {
+              "type": "equals",
+              "value": "OK"
+            }
+          ]
+        },
+        "testIdx": 1,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "question": "easy"
+        },
+        "metadata": {
+          "external_case_id": "easy",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "error": "Expected output \"NO\" to equal \"OK\"",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Expected output \"NO\" to equal \"OK\"",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Expected output \"NO\" to equal \"OK\"",
+              "assertion": {
+                "type": "equals",
+                "value": "OK"
+              }
+            }
+          ]
+        },
+        "id": "148be972-1418-488c-b0dc-17a82682d664",
+        "latencyMs": 0,
+        "namedScores": {},
+        "prompt": {
+          "raw": "hard",
+          "label": "{{question}}",
+          "config": {}
+        },
+        "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+        "promptIdx": 0,
+        "repeatGroupId": "test-1-vars-0",
+        "repeatIndex": 0,
+        "provider": {
+          "id": "local-synthetic-baseline"
+        },
+        "response": {
+          "output": "NO"
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "vars": {
+            "question": "hard"
+          },
+          "metadata": {
+            "external_case_id": "hard"
+          },
+          "options": {
+            "repeat": 2
+          },
+          "assert": [
+            {
+              "type": "equals",
+              "value": "OK"
+            }
+          ]
+        },
+        "testIdx": 2,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "question": "hard"
+        },
+        "metadata": {
+          "external_case_id": "hard",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0,
+        "error": "Expected output \"NO\" to equal \"OK\"",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Expected output \"NO\" to equal \"OK\"",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Expected output \"NO\" to equal \"OK\"",
+              "assertion": {
+                "type": "equals",
+                "value": "OK"
+              }
+            }
+          ]
+        },
+        "id": "44056693-438c-40cc-97a2-87562eb10fa0",
+        "latencyMs": 0,
+        "namedScores": {},
+        "prompt": {
+          "raw": "hard",
+          "label": "{{question}}",
+          "config": {}
+        },
+        "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+        "promptIdx": 0,
+        "repeatGroupId": "test-1-vars-0",
+        "repeatIndex": 1,
+        "provider": {
+          "id": "local-synthetic-baseline"
+        },
+        "response": {
+          "output": "NO"
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "vars": {
+            "question": "hard"
+          },
+          "metadata": {
+            "external_case_id": "hard"
+          },
+          "options": {
+            "repeat": 2
+          },
+          "assert": [
+            {
+              "type": "equals",
+              "value": "OK"
+            }
+          ]
+        },
+        "testIdx": 3,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "question": "hard"
+        },
+        "metadata": {
+          "external_case_id": "hard",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0,
+        "error": "Expected output \"NO\" to equal \"OK\"",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Expected output \"NO\" to equal \"OK\"",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Expected output \"NO\" to equal \"OK\"",
+              "assertion": {
+                "type": "equals",
+                "value": "OK"
+              }
+            }
+          ]
+        },
+        "id": "ca243190-2d3d-45a5-b3c4-d51422b433f0",
+        "latencyMs": 1,
+        "namedScores": {},
+        "prompt": {
+          "raw": "broken",
+          "label": "{{question}}",
+          "config": {}
+        },
+        "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+        "promptIdx": 0,
+        "repeatGroupId": "test-2-vars-0",
+        "repeatIndex": 0,
+        "provider": {
+          "id": "local-synthetic-baseline"
+        },
+        "response": {
+          "output": "NO"
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "vars": {
+            "question": "broken"
+          },
+          "metadata": {
+            "external_case_id": "broken"
+          },
+          "options": {
+            "repeat": 2
+          },
+          "assert": [
+            {
+              "type": "equals",
+              "value": "OK"
+            }
+          ]
+        },
+        "testIdx": 4,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "question": "broken"
+        },
+        "metadata": {
+          "external_case_id": "broken",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0,
+        "error": "Expected output \"NO\" to equal \"OK\"",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Expected output \"NO\" to equal \"OK\"",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Expected output \"NO\" to equal \"OK\"",
+              "assertion": {
+                "type": "equals",
+                "value": "OK"
+              }
+            }
+          ]
+        },
+        "id": "5118d7c3-29f7-4a2c-95d1-19ab34ad1da8",
+        "latencyMs": 0,
+        "namedScores": {},
+        "prompt": {
+          "raw": "broken",
+          "label": "{{question}}",
+          "config": {}
+        },
+        "promptId": "d3bcaf71c11c2678899be04d872718325f0916b3b0705e805ee29930663a42e2",
+        "promptIdx": 0,
+        "repeatGroupId": "test-2-vars-0",
+        "repeatIndex": 1,
+        "provider": {
+          "id": "local-synthetic-baseline"
+        },
+        "response": {
+          "output": "NO"
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "vars": {
+            "question": "broken"
+          },
+          "metadata": {
+            "external_case_id": "broken"
+          },
+          "options": {
+            "repeat": 2
+          },
+          "assert": [
+            {
+              "type": "equals",
+              "value": "OK"
+            }
+          ]
+        },
+        "testIdx": 5,
+        "tokenUsage": {
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "total": 0,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "question": "broken"
+        },
+        "metadata": {
+          "external_case_id": "broken",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      }
+    ],
+    "stats": {
+      "successes": 2,
+      "failures": 4,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 0,
+        "total": 0,
+        "numRequests": 6,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 32,
+      "evaluationDurationMs": 32
+    },
+    "repeatStability": {
+      "totalGroups": 3,
+      "unstableGroups": 0,
+      "groupsWithErrors": 0,
+      "cachedResults": 0,
+      "groups": [
+        {
+          "repeatGroupId": "test-0-vars-0",
+          "promptIdx": 0,
+          "provider": {
+            "id": "local-synthetic-baseline"
+          },
+          "promptLabel": "{{question}}",
+          "repetitions": 2,
+          "passed": 2,
+          "failed": 0,
+          "errors": 0,
+          "cached": 0,
+          "unstable": false,
+          "passRate": 1,
+          "passRateConfidenceInterval": {
+            "confidenceLevel": 0.95,
+            "lower": 0.34238022750665303,
+            "upper": 1
+          }
+        },
+        {
+          "repeatGroupId": "test-1-vars-0",
+          "promptIdx": 0,
+          "provider": {
+            "id": "local-synthetic-baseline"
+          },
+          "promptLabel": "{{question}}",
+          "repetitions": 2,
+          "passed": 0,
+          "failed": 2,
+          "errors": 0,
+          "cached": 0,
+          "unstable": false,
+          "passRate": 0,
+          "passRateConfidenceInterval": {
+            "confidenceLevel": 0.95,
+            "lower": 0,
+            "upper": 0.6576197724933469
+          }
+        },
+        {
+          "repeatGroupId": "test-2-vars-0",
+          "promptIdx": 0,
+          "provider": {
+            "id": "local-synthetic-baseline"
+          },
+          "promptLabel": "{{question}}",
+          "repetitions": 2,
+          "passed": 0,
+          "failed": 2,
+          "errors": 0,
+          "cached": 0,
+          "unstable": false,
+          "passRate": 0,
+          "passRateConfidenceInterval": {
+            "confidenceLevel": 0.95,
+            "lower": 0,
+            "upper": 0.6576197724933469
+          }
+        }
+      ]
+    }
+  },
+  "config": {
+    "prompts": [
+      {
+        "raw": "{{question}}",
+        "label": "{{question}}"
+      }
+    ],
+    "providers": [
+      {
+        "id": "local-synthetic-baseline"
+      }
+    ],
+    "tests": [
+      {
+        "vars": {
+          "question": "easy"
+        },
+        "metadata": {
+          "external_case_id": "easy"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      {
+        "vars": {
+          "question": "hard"
+        },
+        "metadata": {
+          "external_case_id": "hard"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      },
+      {
+        "vars": {
+          "question": "broken"
+        },
+        "metadata": {
+          "external_case_id": "broken"
+        },
+        "options": {
+          "repeat": 2
+        },
+        "assert": [
+          {
+            "type": "equals",
+            "value": "OK"
+          }
+        ]
+      }
+    ],
+    "writeLatestResults": false,
+    "sharing": false,
+    "outputPath": "real-baseline-export.json",
+    "basePath": "/tmp/promptfoo-adapter-evidence"
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.125.1",
+    "nodeVersion": "v22.23.4",
+    "platform": "linux",
+    "arch": "x64",
+    "exportedAt": "2026-11-07T01:50:43.983Z",
+    "evaluationCreatedAt": "2026-11-07T01:50:43.880Z"
+  },
+  "vars": [
+    "question"
+  ]
+}
