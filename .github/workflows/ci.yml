@@ -48,3 +48,65 @@ jobs:
               {'code': 'MISSING_OBSERVATION', 'id': 'hard', 'trial': 2},
           ]
           PY
+      - name: Exercise installed Promptfoo CLI outside source tree
+        env:
+          SOURCE_DIR: ${{ github.workspace }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          import tempfile
+
+          source = Path(os.environ['SOURCE_DIR']).resolve()
+          fixtures = source / 'tests' / 'fixtures' / 'promptfoo'
+          with tempfile.TemporaryDirectory() as working:
+              def cli(*args):
+                  return subprocess.run(['evaldenom', *map(str, args)], cwd=working,
+                                        capture_output=True, text=True)
+              root = Path(working)
+              manifest = root / 'manifest.json'
+              frozen = cli('promptfoo-freeze', fixtures / 'prospective-tests.json',
+                           '--grader', 'local-equals-v1', '--output', manifest)
+              assert frozen.returncode == 0, frozen.stderr
+              selections = root / 'selections.json'
+              selections.write_text(json.dumps({
+                  label: {'provider_id': 'local-synthetic-' + label, 'prompt_index': 0,
+                          'grader': 'local-equals-v1'}
+                  for label in ('baseline', 'candidate')
+              }), encoding='utf-8')
+              runs = {}
+              for label in ('baseline', 'candidate'):
+                  path = root / (label + '.json')
+                  path.write_bytes((fixtures / ('real-' + label + '-export.json')).read_bytes())
+                  runs[label] = path
+              args = ['promptfoo-audit', manifest, '--selections', selections]
+              for label, path in runs.items():
+                  args.extend(['--run', label + '=' + str(path)])
+              ready = cli(*args)
+              assert ready.returncode == 0, ready.stderr
+              assert json.loads(ready.stdout)['status'] == 'READY'
+              for path in runs.values():
+                  data = json.loads(path.read_text(encoding='utf-8'))
+                  data['results']['results'] = [r for r in data['results']['results']
+                      if r['testCase']['metadata']['external_case_id'] != 'hard']
+                  path.write_text(json.dumps(data), encoding='utf-8')
+              blocked = cli(*args)
+              assert blocked.returncode == 1, blocked.stderr
+              report = json.loads(blocked.stdout)
+              assert report['status'] == 'BLOCKED'
+              for run in report['runs'].values():
+                  assert run['findings'] == [
+                      {'code': 'MISSING_OBSERVATION', 'id': 'hard', 'trial': 1},
+                      {'code': 'MISSING_OBSERVATION', 'id': 'hard', 'trial': 2},
+                  ]
+              selections.write_text('{"a":1,"a":2}', encoding='utf-8')
+              output = root / 'report.json'
+              output.write_text('KEEP', encoding='utf-8')
+              invalid = cli(*args, '--output', output)
+              assert invalid.returncode == 2 and invalid.stdout == ''
+              assert output.read_text(encoding='utf-8') == 'KEEP'
+              print('Installed Promptfoo CLI outside checkout: READY=0, shared omission=1, invalid=2; output preserved')
+          PY
