@@ -1,0 +1,9 @@
+[
+  {
+    "name": "accuracy",
+    "grader": "synthetic-exact-v1",
+    "direction": "higher",
+    "min": 0,
+    "max": 1
+  }
+]
