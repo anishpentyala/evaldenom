@@ -1,2 +1,0 @@
-{"id": "easy", "trial": 1, "input_digest": "pyjson-v1:70c015f2fea65353ad1440a3c7e156b05c1538f14a59de2226d805e700bbb7b0", "cluster": "easy-source", "metrics": {"accuracy": {"status": "ok", "grader": "synthetic-exact-v1", "direction": "higher", "value": 1}}}
-{"id": "easy", "trial": 2, "input_digest": "pyjson-v1:70c015f2fea65353ad1440a3c7e156b05c1538f14a59de2226d805e700bbb7b0", "cluster": "easy-source", "metrics": {"accuracy": {"status": "ok", "grader": "synthetic-exact-v1", "direction": "higher", "value": 1}}}

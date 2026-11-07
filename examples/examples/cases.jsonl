@@ -1,2 +1,0 @@
-{"id": "easy", "input": {"question": "easy synthetic question"}, "trials": [1, 2], "cluster": "easy-source"}
-{"id": "hard", "input": {"question": "hard synthetic question"}, "trials": [1, 2], "cluster": "hard-source"}
