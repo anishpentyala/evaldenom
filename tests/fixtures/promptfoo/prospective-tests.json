@@ -1,0 +1,5 @@
+[
+  {"vars":{"question":"easy"},"metadata":{"external_case_id":"easy"},"options":{"repeat":2},"assert":[{"type":"equals","value":"OK"}]},
+  {"vars":{"question":"hard"},"metadata":{"external_case_id":"hard"},"options":{"repeat":2},"assert":[{"type":"equals","value":"OK"}]},
+  {"vars":{"question":"broken"},"metadata":{"external_case_id":"broken"},"options":{"repeat":2},"assert":[{"type":"equals","value":"OK"}]}
+]
