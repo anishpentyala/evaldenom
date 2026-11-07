@@ -4,7 +4,7 @@ Exact current SDK summary v3, explicit provider/prompt selection, repeated runs.
 Input identity is (resolved vars, resolved assertions). No model/provider attestation.
 Caller grader label is an explicit claim, just as in the core export contract.
 """
-from .core import InputError, input_digest, freeze
+from .core import InputError, input_digest, freeze, _number
 
 def rows_from_summary(summary,*,provider_id,prompt_index,grader):
     if not isinstance(summary,dict) or type(summary.get('version')) is not int or summary['version']!=3:
@@ -33,7 +33,9 @@ def rows_from_summary(summary,*,provider_id,prompt_index,grader):
             # Assertion failures can carry error text and score0. Provider errors
             # remain errors even with stale numeric scores.
             g=r.get('gradingResult')
-            if not isinstance(g,dict) or type(g.get('pass')) is not bool or g['pass']!=r['success'] or g.get('score')!=r.get('score'):
+            if (not isinstance(g,dict) or type(g.get('pass')) is not bool
+                    or g['pass']!=r['success'] or not _number(g.get('score'))
+                    or g['score']!=r.get('score')):
                 raise InputError('missing or contradictory aggregate grading evidence')
             metric['value']=r.get('score')
         identity={'vars':r['vars'],'assert':test['assert']}
