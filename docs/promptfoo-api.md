@@ -1,7 +1,7 @@
 # Experimental Promptfoo JSON API
 
-This is an API-only adapter for a narrow, tested subset of Promptfoo 0.125.1
-exports. It is not a general config resolver or a CLI integration. Use explicit
+This is a narrow adapter for a tested subset of Promptfoo 0.125.1
+exports, with Python APIs and explicit CLI commands. It is not a general config resolver. Use explicit
 per-test repeat of at least 2, scalar inline vars, literal `equals`/`contains`
 assertions, and the current JSON wrapper with nested summary version 3.
 
@@ -49,6 +49,55 @@ Use stable, unique `metadata.external_case_id` values. The adapter uses this ID
 and zero-based exported `repeatIndex`, not positional `testIdx`. Freeze rejects
 unsupported test fields and more than 100,000 total intended observations. It does
 not truncate to fit that budget. `cluster` is not part of this adapter's plan.
+
+## Command-line workflow
+
+The CLI uses the same strict JSON parser and narrow adapter contract as the APIs.
+No Promptfoo installation or provider access is required for this offline audit.
+Freeze before producing either export:
+
+```sh
+evaldenom promptfoo-freeze planned-tests.json \
+  --grader my-literal-rubric-v1 --output planned-manifest.json
+```
+
+Write `selections.json` with one exact entry per run label. Provider IDs must be
+those in each actual export, not the example IDs below:
+
+```json
+{
+  "baseline": {
+    "provider_id": "my-baseline-provider",
+    "prompt_index": 0,
+    "grader": "my-literal-rubric-v1"
+  },
+  "candidate": {
+    "provider_id": "my-candidate-provider",
+    "prompt_index": 0,
+    "grader": "my-literal-rubric-v1"
+  }
+}
+```
+
+```sh
+evaldenom promptfoo-audit planned-manifest.json \
+  --run baseline=baseline-export.json --run candidate=candidate-export.json \
+  --selections selections.json --output report.json
+```
+
+Exit codes match the core audit: 0 means READY for the supplied claims, 1 means
+BLOCKED, and 2 means an unusable input or I/O error with no new verdict. Omit
+`--output` on audit to print the report to stdout. Inputs cannot be used as output
+paths, including symlink aliases. Existing output is replaced atomically only
+after a complete audit. An error leaves an old report untouched, so always check
+the command's exit status rather than treating an existing report as fresh.
+
+The input file formats are deliberate: prospective tests are a JSON array,
+exports are complete JSON wrappers (not JSONL), and selections are a JSON object.
+Repeated members, non-JSON constants, missing labels and implicit selections are
+rejected. Run labels must be unique `NAME=FILE` entries; filenames may contain `=`.
+This does not add support for default single trials or any other unsupported
+Promptfoo features described above.
 
 ## Audit actual JSON exports
 
