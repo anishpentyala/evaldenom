@@ -118,3 +118,15 @@ def test_nonjson_constant_even_in_ignored_export_field_is_rejected(tmp_path,caps
     assert audit_promptfoo_exports(json.loads(paths[1].read_text()),{name:json.loads(path.read_text()) for name,path in zip(('baseline','candidate'),paths[2:4])},json.loads(paths[4].read_text()))['status']=='READY'
     with pytest.raises(SystemExit) as error:main(audit_args(paths))
     assert error.value.code==2 and not capsys.readouterr().out
+
+@pytest.mark.parametrize('label,index,bad',[
+    ('candidate',0,True),('baseline',2,False),('candidate',0,'1'),
+    ('baseline',2,'0'),('candidate',0,None),
+])
+def test_aggregate_score_type_error_does_not_publish_ready_or_replace_report(tmp_path,capsys,label,index,bad):
+    paths=setup_files(tmp_path);path=paths[2 if label=='baseline' else 3]
+    data=json.loads(path.read_text());data['results']['results'][index]['gradingResult']['score']=bad
+    path.write_text(json.dumps(data));output=tmp_path/'report.json';output.write_text('KEEP')
+    with pytest.raises(SystemExit) as error:main(audit_args(paths)+['--output',str(output)])
+    assert error.value.code==2 and output.read_text()=='KEEP'
+    assert capsys.readouterr().out=='' and not list(tmp_path.glob('.evaldenom-*'))

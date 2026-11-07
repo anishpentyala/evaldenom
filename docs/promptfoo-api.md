@@ -143,7 +143,9 @@ repeated members and NaN/Infinity. The low-level object APIs cannot recover
 members that a caller's last-wins `json.load` already discarded.
 
 Assertion failure remains a valid graded zero when aggregate grading evidence
-agrees with the row. Provider/execution error stays blocking, even with stale
+agrees with the row. Its aggregate grading score must be a finite JSON number:
+booleans do not count as numeric 0/1. Equivalent finite integer/float scores are
+accepted. Provider/execution error stays blocking, even with stale
 score 0. Duplicate trials block; no last-row-wins or implicit attempt selection.
 Coverage is checked against the prospective plan, not the intersection of the
 observed exports. Two runs missing the same hard case still block.

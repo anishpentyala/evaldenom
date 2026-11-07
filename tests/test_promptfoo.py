@@ -337,3 +337,37 @@ def test_genuine_explicit_repeat_one_also_unsupported_missing_trial_identity():
 def test_prospective_repeat_one_rejected_early_to_match_actual_export_limit():
     tests=copy.deepcopy(TESTS);tests[0]['options']['repeat']=1
     with pytest.raises(InputError,match='repeat at least 2'):plan(tests)
+
+@pytest.mark.parametrize('label,index,bad',[
+    ('candidate',0,True),('baseline',2,False),
+    ('candidate',0,'1'),('baseline',2,'0'),
+    ('candidate',0,None),('candidate',0,[]),('candidate',0,{}),
+    ('candidate',0,float('nan')),('candidate',0,float('inf')),
+    ('candidate',0,-float('inf')),('candidate',0,10**1000),
+])
+def test_aggregate_grading_score_must_be_finite_number_not_bool_alias(label,index,bad):
+    exports={k:json.loads((FIXTURES/('real-'+k+'-export.json')).read_text()) for k in ('baseline','candidate')}
+    row=exports[label]['results']['results'][index]
+    assert type(row['score']) in (int,float)
+    row['gradingResult']['score']=bad
+    from evaldenom.promptfoo import audit_promptfoo_exports
+    with pytest.raises(InputError,match='aggregate grading evidence'):
+        audit_promptfoo_exports(plan(TESTS),exports,selections())
+
+@pytest.mark.parametrize('label,index',[('candidate',0),('baseline',2)])
+def test_equivalent_finite_integer_float_grade_remains_supported(label,index):
+    exports={k:json.loads((FIXTURES/('real-'+k+'-export.json')).read_text()) for k in ('baseline','candidate')}
+    row=exports[label]['results']['results'][index]
+    row['gradingResult']['score']=float(row['score'])
+    from evaldenom.promptfoo import audit_promptfoo_exports
+    assert audit_promptfoo_exports(plan(TESTS),exports,selections())['status']=='READY'
+
+
+def test_provider_error_still_blocks_without_needing_aggregate_grade():
+    source=copy.deepcopy(SOURCE)
+    for row in source['results']:
+        if row['failureReason']==2:row['gradingResult']=None
+    converted=convert(source)['rows']
+    report=audit(plan(TESTS),{'a':converted,'b':converted})
+    assert report['status']=='BLOCKED'
+    assert [f['code'] for f in report['runs']['a']['findings']]==['METRIC_ERROR','METRIC_ERROR']
