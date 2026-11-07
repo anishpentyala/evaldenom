@@ -1,0 +1,50 @@
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install from source
+        run: python -m pip install . pytest
+      - name: Run full contract suite
+        run: python -m pytest -q
+      - name: Exercise installed CLI outside source tree
+        shell: bash
+        run: |
+          source_dir="$PWD"
+          cd "$(mktemp -d)"
+          evaldenom freeze "$source_dir/examples/cases.jsonl" --metrics "$source_dir/examples/metrics.json" --output manifest.json
+          evaldenom audit manifest.json --run "baseline=$source_dir/examples/baseline.jsonl" --run "candidate=$source_dir/examples/candidate-complete.jsonl" --output ready.json
+          set +e
+          evaldenom audit manifest.json --run "baseline=$source_dir/examples/baseline.jsonl" --run "candidate=$source_dir/examples/candidate-missing.jsonl" --output blocked.json
+          blocked_status=$?
+          evaldenom audit manifest.json --run "baseline=$source_dir/examples/baseline.jsonl" > invalid.out 2> invalid.err
+          invalid_status=$?
+          set -e
+          test "$blocked_status" -eq 1
+          test "$invalid_status" -eq 2
+          test ! -s invalid.out
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          assert json.loads(Path('ready.json').read_text())['status'] == 'READY'
+          blocked = json.loads(Path('blocked.json').read_text())
+          assert blocked['status'] == 'BLOCKED'
+          assert blocked['runs']['candidate']['findings'] == [
+              {'code': 'MISSING_OBSERVATION', 'id': 'hard', 'trial': 1},
+              {'code': 'MISSING_OBSERVATION', 'id': 'hard', 'trial': 2},
+          ]
+          PY
