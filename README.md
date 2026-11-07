@@ -93,6 +93,13 @@ report. Input errors preserve the previous report. An output path resolving to
 an input path is rejected. This is not a concurrency-safe file transaction against
 hostile path replacement or a hard-link alias defense.
 
+## Experimental native export API
+
+A narrow [Promptfoo JSON API](docs/promptfoo-api.md) supports explicit repeat>=2,
+scalar inline vars and literal equals/contains assertions for current summary-v3
+JSON exports. API only, not a general config resolver or default single-trial
+integration. Use its strict JSON-text boundary and read the limits first.
+
 ## Example that catches selection bias
 
 The synthetic fixture has `easy` and `hard`, each with two intended trials.
@@ -131,7 +138,8 @@ in denominator.
 
 ## Limits
 
-- You must write an exporter to this format. No native harness integration yet.
+- General harness export integration is not provided. A narrow experimental
+  Promptfoo JSON API is available for its documented subset only.
 - A manifest created after seeing results can encode selective inclusion.
 - Input digests, grader versions and cluster labels are supplied claims, not
   authenticated execution evidence. No code/model/dataset attestation.
