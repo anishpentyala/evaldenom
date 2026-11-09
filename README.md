@@ -13,6 +13,41 @@ trials, fill missing scores, retry requests, or change your dataset. A READY
 report is a coverage/identity check on supplied claims, not proof that the model
 saw those inputs or that an evaluator was implemented correctly.
 
+## Check a changed evaluation plan before running it
+
+An audit checks exports against one intended manifest. Before executing a changed
+plan, compare its frozen contract with the earlier one:
+
+```sh
+evaldenom manifest-diff previous-manifest.json proposed-manifest.json --output drift.json
+```
+
+Exit 0 means `MATCH`: declared cases, input digests, trials, cluster labels and
+metric contracts agree. Exit 1 means `CHANGED`: the report names added/removed
+cases, changed inputs or clusters, added/removed trials, and changes to metric
+names, graders, directions or bounds. Exit 2 means unusable input or an output
+error, with no new comparison verdict. Both manifests are fully validated first;
+an old output is left untouched on input errors, so check the exit status.
+
+Case/metric list order and trial order do not matter. A missing bound differs
+from an explicit bound. Numeric bounds such as `0` and `0.0` are equivalent,
+matching the core audit's numeric comparisons. Nothing aligns cases by position,
+selects a common subset or approves dropping a difficult case. Source-manifest
+hashes identify the supplied files' JSON values, including list order, so these
+hashes may differ even when the declared contracts match.
+
+This command reads only prospective manifests, not run exports or scores. It
+helps inspect denominator/rubric drift before spending on an experiment. It does
+not approve the new plan or establish actual model inputs, grader implementation
+or statistical comparability. Reports contain case and metric identifiers; review
+them before sharing. Per-case input hashes, raw inputs and score values are not
+copied into the change list. The existing `audit` command still decides export
+coverage against the chosen manifest; `MATCH` is never an audit `READY` verdict.
+
+Python callers can use `evaldenom.manifestdiff.compare_manifests(previous, current)`
+with parsed manifests. File callers should use the CLI's strict JSON boundary,
+which rejects repeated object members and non-JSON numeric constants.
+
 ## Install from source
 
 ```sh
