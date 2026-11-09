@@ -41,9 +41,18 @@ def main(argv=None):
     pa.add_argument('--run', action='append', required=True, metavar='NAME=FILE')
     pa.add_argument('--selections', required=True, help='Strict JSON run-label to provider/prompt/grader map.')
     pa.add_argument('--output')
+    d = sub.add_parser('manifest-diff', help='Compare two prospective contracts, not run scores.')
+    d.add_argument('previous')
+    d.add_argument('current')
+    d.add_argument('--output')
     args = parser.parse_args(argv)
     try:
-        if args.command == 'freeze':
+        if args.command == 'manifest-diff':
+            from .manifestdiff import compare_manifests
+            if args.output and Path(args.output).resolve() in {Path(args.previous).resolve(), Path(args.current).resolve()}:
+                raise InputError('output must not replace an input')
+            result = compare_manifests(read_json(args.previous), read_json(args.current))
+        elif args.command == 'freeze':
             if Path(args.output).resolve() in {Path(args.cases).resolve(), Path(args.metrics).resolve()}:
                 raise InputError('output must not replace an input')
             result = freeze(read_jsonl(args.cases), read_json(args.metrics))
@@ -75,12 +84,12 @@ def main(argv=None):
             _write(args.output, text)
         else:
             print(text, end='')
-        return 1 if result.get('status') == 'BLOCKED' else 0
+        return 1 if result.get('status') in ('BLOCKED', 'CHANGED') else 0
     except InputError as error:
         # InputError messages are controlled diagnostics, never raw values.
-        parser.exit(2, 'evaldenom: %s; no audit verdict published\n' % error)
+        parser.exit(2, 'evaldenom: %s; no %s verdict published\n' % (error, 'comparison' if args.command == 'manifest-diff' else 'audit'))
     except (OSError, UnicodeError):
-        parser.exit(2, 'evaldenom: input or output I/O error; no audit verdict published\n')
+        parser.exit(2, 'evaldenom: input or output I/O error; no %s verdict published\n' % ('comparison' if args.command == 'manifest-diff' else 'audit'))
 
 
 if __name__ == '__main__':
