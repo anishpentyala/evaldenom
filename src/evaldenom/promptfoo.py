@@ -35,6 +35,7 @@ def rows_from_summary(summary,*,provider_id,prompt_index,grader):
             g=r.get('gradingResult')
             if (not isinstance(g,dict) or type(g.get('pass')) is not bool
                     or g['pass']!=r['success'] or not _number(g.get('score'))
+                    or not _number(r.get('score'))
                     or g['score']!=r.get('score')):
                 raise InputError('missing or contradictory aggregate grading evidence')
             metric['value']=r.get('score')

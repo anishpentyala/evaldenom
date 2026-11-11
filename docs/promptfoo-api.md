@@ -143,10 +143,20 @@ repeated members and NaN/Infinity. The low-level object APIs cannot recover
 members that a caller's last-wins `json.load` already discarded.
 
 Assertion failure remains a valid graded zero when aggregate grading evidence
-agrees with the row. Its aggregate grading score must be a finite JSON number:
-booleans do not count as numeric 0/1. Equivalent finite integer/float scores are
-accepted. Provider/execution error stays blocking, even with stale
-score 0. Duplicate trials block; no last-row-wins or implicit attempt selection.
+agrees with the row. Both the exported row score and aggregate grading score
+must independently be finite JSON numbers before they are compared: booleans do not count as numeric
+0/1. Malformed selected-row scores raise InputError rather than returning a
+converted row for the core audit to reject later. Equivalent finite integer/float
+scores are accepted. Provider/execution error stays blocking, even with stale
+score 0.
+
+Compatibility note: a boolean row score paired with numeric grading score
+previously reached the core audit, which already returned BLOCKED with
+INVALID_SCORE (CLI exit 1 and a published blocking report). It now raises
+InputError at conversion (CLI exit 2, no new report, old output preserved).
+This is a stricter adapter input boundary, not a fix for a false READY verdict.
+
+Duplicate trials block; no last-row-wins or implicit attempt selection.
 Coverage is checked against the prospective plan, not the intersection of the
 observed exports. Two runs missing the same hard case still block.
 
