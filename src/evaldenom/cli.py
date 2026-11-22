@@ -2,9 +2,35 @@
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 import tempfile
 from .core import InputError, audit, freeze, read_json, read_jsonl
+
+
+def _write_text(stream, text):
+    if stream is None:
+        raise OSError('output stream is unavailable')
+    written = stream.write(text)
+    if type(written) is not int or written != len(text):
+        raise OSError('output stream did not accept complete text')
+    stream.flush()
+
+
+class _ArgumentParser(argparse.ArgumentParser):
+    def _print_message(self, message, file=None):
+        # argparse may suppress write errors; keep them inside our I/O boundary.
+        if message:
+            _write_text(sys.stderr if file is None else file, message)
+
+
+def _error(message, comparison=False):
+    try:
+        _write_text(sys.stderr, 'evaldenom: %s; no %s verdict published\n' %
+                    (message, 'comparison' if comparison else 'audit'))
+    except (OSError, ValueError):
+        pass
+    raise SystemExit(2)
 
 
 def _write(path, text):
@@ -14,7 +40,7 @@ def _write(path, text):
         with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', dir=path.parent,
                                          prefix='.evaldenom-', delete=False) as out:
             temporary = out.name
-            out.write(text)
+            _write_text(out, text)
         os.replace(temporary, path)
     finally:
         if temporary is not None and os.path.exists(temporary):
@@ -22,7 +48,7 @@ def _write(path, text):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description='Audit intended evaluation coverage and identity, offline.')
+    parser = _ArgumentParser(description='Audit intended evaluation coverage and identity, offline.')
     sub = parser.add_subparsers(dest='command', required=True)
     f = sub.add_parser('freeze')
     f.add_argument('cases')
@@ -45,7 +71,10 @@ def main(argv=None):
     d.add_argument('previous')
     d.add_argument('current')
     d.add_argument('--output')
-    args = parser.parse_args(argv)
+    try:
+        args = parser.parse_args(argv)
+    except (OSError, ValueError):
+        _error('output delivery failed')
     try:
         if args.command == 'manifest-diff':
             from .manifestdiff import compare_manifests
@@ -83,14 +112,34 @@ def main(argv=None):
         if args.output:
             _write(args.output, text)
         else:
-            print(text, end='')
+            _write_text(sys.stdout, text)
         return 1 if result.get('status') in ('BLOCKED', 'CHANGED') else 0
     except InputError as error:
         # InputError messages are controlled diagnostics, never raw values.
-        parser.exit(2, 'evaldenom: %s; no %s verdict published\n' % (error, 'comparison' if args.command == 'manifest-diff' else 'audit'))
-    except (OSError, UnicodeError):
-        parser.exit(2, 'evaldenom: input or output I/O error; no %s verdict published\n' % ('comparison' if args.command == 'manifest-diff' else 'audit'))
+        _error(str(error), args.command == 'manifest-diff')
+    except (OSError, UnicodeError, ValueError):
+        _error('input or output I/O error', args.command == 'manifest-diff')
+
+
+def cli(argv=None):
+    """Terminating entry point; embedded main leaves caller streams open."""
+    try:
+        code = main(argv)
+    except SystemExit as error:
+        code = error.code if isinstance(error.code, int) else 0 if error.code is None else 1
+    for name in ('stdout', 'stderr'):
+        stream = getattr(sys, name)
+        if stream is None:
+            continue
+        try:
+            stream.flush()
+        except (OSError, ValueError):
+            # Do not retry an already-failing stream at interpreter shutdown,
+            # which could replace the documented exit 2 with CPython's exit 120.
+            setattr(sys, name, None)
+            code = 2
+    return code
 
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    raise SystemExit(cli())
