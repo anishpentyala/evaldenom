@@ -9,7 +9,7 @@ requires-python = ">=3.9"
 license = {text = "MIT"}
 dependencies = []
 [project.scripts]
-evaldenom = "evaldenom.cli:main"
+evaldenom = "evaldenom.cli:cli"
 [tool.setuptools.packages.find]
 where = ["src"]
 [tool.pytest.ini_options]
