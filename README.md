@@ -26,7 +26,10 @@ Exit 0 means `MATCH`: declared cases, input digests, trials, cluster labels and
 metric contracts agree. Exit 1 means `CHANGED`: the report names added/removed
 cases, changed inputs or clusters, added/removed trials, and changes to metric
 names, graders, directions or bounds. Exit 2 means unusable input or an output
-error, with no new comparison verdict. Both manifests are fully validated first;
+error, with no new comparison verdict. Standard output must accept the complete report
+and flush successfully before exit 0 or 1; failed help/diagnostic delivery also
+exits 2. A broken destination can retain a partial JSON prefix, so a report is
+usable only with its successful delivery and expected exit status. Both manifests are fully validated first;
 an old output is left untouched on input errors, so check the exit status.
 
 Case/metric list order and trial order do not matter. A missing bound differs
