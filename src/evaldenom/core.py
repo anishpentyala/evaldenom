@@ -193,7 +193,10 @@ def audit(manifest, runs):
     cases, metrics = validate_manifest(manifest)
     if not isinstance(runs, dict) or len(runs) < 2:
         raise InputError('supply at least two separately named runs')
-    expected = {(ident, trial) for ident, case in cases.items() for trial in case['trials']}
+    # Reuse short validated trial lists; hash longer ones for membership checks.
+    expected_trials = {ident: case['trials'] if len(case['trials']) <= 8 else set(case['trials'])
+                       for ident, case in cases.items()}
+    expected_count = sum(map(len, expected_trials.values()))
     reports = {}
     for label, rows in runs.items():
         _label(label)
@@ -214,7 +217,7 @@ def audit(manifest, runs):
                 if metric is not None:
                     item['metric'] = metric
                 findings.append(item)
-            if key not in expected:
+            if ident not in expected_trials or row['trial'] not in expected_trials[ident]:
                 flag('UNEXPECTED_OBSERVATION')
                 continue
             case = cases[ident]
@@ -243,15 +246,19 @@ def audit(manifest, runs):
                 elif (('min' in spec and metric['value'] < spec['min'])
                       or ('max' in spec and metric['value'] > spec['max'])):
                     flag('SCORE_OUT_OF_BOUNDS', name)
-        for ident, trial in sorted(expected - counts.keys()):
-            findings.append({'code': 'MISSING_OBSERVATION', 'id': ident, 'trial': trial})
+        for ident in sorted(expected_trials):
+            for trial in sorted(expected_trials[ident]):
+                if (ident, trial) not in counts:
+                    findings.append({'code': 'MISSING_OBSERVATION', 'id': ident, 'trial': trial})
         for (ident, trial), count in sorted(counts.items()):
             if count > 1:
                 findings.append({'code': 'DUPLICATE_OBSERVATION', 'id': ident,
                                  'trial': trial, 'count': count})
-        reports[label] = {'expected_observations': len(expected),
+        reports[label] = {'expected_observations': expected_count,
                           'supplied_records': sum(counts.values()),
-                          'matched_unique_identities': len(expected & counts.keys()),
+                          'matched_unique_identities': sum(
+                              ident in expected_trials and trial in expected_trials[ident]
+                              for ident, trial in counts),
                           'status': 'BLOCKED' if findings else 'READY', 'findings': findings}
     return {'schema_version': 1, 'manifest_digest': input_digest(manifest),
             'status': 'BLOCKED' if any(r['findings'] for r in reports.values()) else 'READY',
