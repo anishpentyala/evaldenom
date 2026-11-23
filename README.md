@@ -1,5 +1,7 @@
 # evaldenom
 
+[![Tests](https://github.com/anishpentyala/evaldenom/actions/workflows/ci.yml/badge.svg)](https://github.com/anishpentyala/evaldenom/actions)
+
 Check that evaluation exports cover the cases you intended to measure before
 comparing their scores. Offline, Python standard library only.
 
@@ -12,6 +14,28 @@ It does not run models, compute significance, pick a best run, average repeated
 trials, fill missing scores, retry requests, or change your dataset. A READY
 report is a coverage/identity check on supplied claims, not proof that the model
 saw those inputs or that an evaluator was implemented correctly.
+
+## Try the missing-case check
+
+Python 3.9 or newer, no runtime dependencies. The repository includes an invented
+four-observation fixture: two cases with two trials each. The candidate drops
+both hard-case trials.
+
+```sh
+git clone https://github.com/anishpentyala/evaldenom.git
+cd evaldenom
+python -m pip install .
+evaldenom freeze examples/cases.jsonl --metrics examples/metrics.json --output manifest.json
+evaldenom audit manifest.json --run baseline=examples/baseline.jsonl --run candidate=examples/candidate-missing.jsonl
+```
+
+The audit exits 1 with `BLOCKED`, rather than approving comparison on only the
+easy cases. Replace `candidate-missing.jsonl` with `candidate-complete.jsonl` for
+an exit-0 `READY` report. Neither verdict establishes a score gain or verifies
+that the claimed inputs and graders were actually used.
+
+A PyPI release is being prepared. Until its package page is linked here, use the
+source-install commands above.
 
 ## Check a changed evaluation plan before running it
 
