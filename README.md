@@ -89,6 +89,25 @@ and the complete findings in memory. A mostly missing run can produce a large
 report. This is not a streaming audit or a hard RAM cap, and extra Python
 membership checks can cost time. Verdicts and finding order are unchanged.
 
+## Digest validation memory
+
+`input_digest` still serializes the complete value to preserve its `pyjson-v1`
+format and reject cycles before validation. Its strict JSON-type validation now
+walks iterator frames rather than making another list of all sibling references.
+The validation stack follows nesting depth, not container width. Digests and
+invalid-input diagnostics retain the previous traversal order for ordinary JSON
+containers. Container subclasses are inspected through built-in storage views,
+not overridden iterators: an override cannot hide a non-JSON child from strict
+validation. Such pathological subclasses can now be rejected where the old walk
+accepted them.
+
+This is an allocation tradeoff, not streaming hashing or a hard memory bound.
+The caller's value, serialized JSON and hash input still need memory, and an
+iterator walk can cost CPU time. A local 300,000-element null-list fixture reduced
+total traced peak from about 3.90 MB to 3.00 MB; wide-dictionary and nested-list
+fixtures showed little total-peak change because serialization dominated. Those
+are synthetic local measurements, not general speed or memory promises.
+
 ## Install from source
 
 ```sh
