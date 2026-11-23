@@ -75,6 +75,20 @@ Python callers can use `evaldenom.manifestdiff.compare_manifests(previous, curre
 with parsed manifests. File callers should use the CLI's strict JSON boundary,
 which rejects repeated object members and non-JSON numeric constants.
 
+## Audit memory
+
+The audit checks every intended observation, including ones missing from both
+exports. It does not build a second flat set of every intended `(case, trial)`
+pair. Short trial lists are reused for membership checks; longer trial lists
+get per-case sets. Missing-identity and matched-identity checks avoid temporary
+full-population set differences and intersections.
+
+This reduces Python allocation for the coverage index, not the size of the
+exports or findings. Audit still holds parsed inputs, supplied-identity counts
+and the complete findings in memory. A mostly missing run can produce a large
+report. This is not a streaming audit or a hard RAM cap, and extra Python
+membership checks can cost time. Verdicts and finding order are unchanged.
+
 ## Install from source
 
 ```sh
