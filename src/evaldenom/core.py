@@ -121,15 +121,21 @@ def input_digest(value):
                           separators=(',', ':'), allow_nan=False)
     except (TypeError, ValueError, RecursionError):
         raise InputError('input serialization failed or exceeded runtime limits') from None
-    pending = [value]
+    # Match the old LIFO traversal order without copying every sibling into
+    # a second reference list. Iterator frames retain only the active depth.
+    pending = [iter((value,))]
     while pending:
-        item = pending.pop()
+        try:
+            item = next(pending[-1])
+        except StopIteration:
+            pending.pop()
+            continue
         if isinstance(item, dict):
-            if any(type(k) is not str for k in item):
+            if any(type(k) is not str for k in dict.__iter__(item)):
                 raise InputError('input object keys must be strings')
-            pending.extend(item.values())
+            pending.append(reversed(dict.values(item)))
         elif isinstance(item, list):
-            pending.extend(item)
+            pending.append(list.__reversed__(item))
         elif type(item) not in (type(None), bool, str, int, float):
             raise InputError('input must contain JSON values only')
         elif type(item) is float and not math.isfinite(item):
