@@ -6,8 +6,11 @@ Digests bind the supplied JSON values, not the actual prompts a model saw.
 import hashlib
 import json
 import math
+import os
+import stat
 import re
 from collections import Counter
+from contextlib import contextmanager
 from pathlib import Path
 
 
@@ -37,9 +40,21 @@ def loads(text):
         raise InputError('JSON decoding failed or exceeded runtime limits') from None
 
 
+@contextmanager
+def _regular_text(path):
+    def nonblocking(name, flags):
+        return os.open(name, flags | getattr(os, 'O_NONBLOCK', 0))
+
+    with open(path, encoding='utf-8', opener=nonblocking) as stream:
+        if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+            raise InputError('input must be a regular file')
+        yield stream
+
+
 def read_json(path):
     try:
-        return loads(Path(path).read_text(encoding='utf-8'))
+        with _regular_text(Path(path)) as stream:
+            return loads(stream.read())
     except (OSError, UnicodeError):
         raise InputError('cannot read UTF-8 JSON input') from None
 
@@ -47,7 +62,7 @@ def read_json(path):
 def read_jsonl(path):
     rows = []
     try:
-        with open(path, encoding='utf-8') as stream:
+        with _regular_text(path) as stream:
             for line, text in enumerate(stream, 1):
                 if not text.strip():
                     continue
