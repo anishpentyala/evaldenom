@@ -258,3 +258,17 @@ python -m pytest -q
 Authorship: implementation, documentation and synthetic tests were produced by
 an AI assistant working on Anish's behalf. Anish has not personally reviewed or
 executed them. Early source release, not a published PyPI package. No adoption claim.
+
+### JSON input files
+
+JSON and JSONL file readers now require regular files. The opened descriptor is
+checked before text is consumed. Symlinks to regular files remain supported.
+On systems with `O_NONBLOCK`, writerless FIFOs are refused without waiting for a
+producer. Pipes, process-substitution streams and devices are not supported
+inputs. Rejection returns an input error (CLI exit 2) without a report or
+replacing an existing output file.
+
+This is an intentional input-policy tightening, not a universal read timeout:
+opening or reading a regular file on a slow filesystem can still wait, and
+files can change during reading. JSON decoding, duplicate-member checks and
+physical JSONL line numbers for regular files are unchanged.
