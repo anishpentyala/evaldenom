@@ -59,20 +59,24 @@ def read_json(path):
         raise InputError('cannot read UTF-8 JSON input') from None
 
 
-def read_jsonl(path):
-    rows = []
+def _iter_jsonl(path):
+    """Private one-pass file reader; callers must close on early termination."""
     try:
         with _regular_text(path) as stream:
             for line, text in enumerate(stream, 1):
                 if not text.strip():
                     continue
                 try:
-                    rows.append((line, loads(text)))
+                    yield line, loads(text)
                 except InputError as error:
                     raise InputError('JSONL line %d: %s' % (line, error)) from None
     except (OSError, UnicodeError):
         raise InputError('cannot read UTF-8 JSONL input') from None
-    return rows
+
+
+def read_jsonl(path):
+    """Return materialized rows, retaining the public list-based API."""
+    return list(_iter_jsonl(path))
 
 
 def _keys(value, required, optional=()):
@@ -207,7 +211,7 @@ def validate_manifest(value):
 def audit(manifest, runs):
     """Audit named runs, returning coverage findings, never a partial score.
 
-    runs maps a unique run name to [(physical_line, JSON_object),...].
+    runs maps each unique run name to an iterable of (physical_line, JSON_object) pairs.
     Malformed envelopes raise InputError. Valid incomplete/error evidence is
     reported as blocking, preserving other rows rather than fabricating success.
     """
