@@ -34,8 +34,16 @@ easy cases. Replace `candidate-missing.jsonl` with `candidate-complete.jsonl` fo
 an exit-0 `READY` report. Neither verdict establishes a score gain or verifies
 that the claimed inputs and graders were actually used.
 
-A PyPI release is being prepared. Until its package page is linked here, use the
-source-install commands above.
+Install the pinned 0.1.0 release from [PyPI](https://pypi.org/project/evaldenom/0.1.0/):
+
+```sh
+python -m pip install evaldenom==0.1.0
+```
+
+The PyPI 0.1.0 release does not include the source-only changes described below: regular-file input admission, native audit streaming, audit memory changes, or digest-validation memory changes. Use a source checkout for those changes.
+
+The package release is pinned separately from later repository development.
+Source-install commands in this README use the checked-out code, which may be newer.
 
 ## Check a changed evaluation plan before running it
 
@@ -75,7 +83,7 @@ Python callers can use `evaldenom.manifestdiff.compare_manifests(previous, curre
 with parsed manifests. File callers should use the CLI's strict JSON boundary,
 which rejects repeated object members and non-JSON numeric constants.
 
-## Audit memory
+## Audit memory (source-only, unreleased)
 
 The audit checks every intended observation, including ones missing from both
 exports. It does not build a second flat set of every intended `(case, trial)`
@@ -102,7 +110,7 @@ metrics per record, three fresh-process tracemalloc peaks fell from about
 The reports matched byte for byte. These are fixture-specific Python-allocation
 measurements, not RSS limits or general speed promises.
 
-## Digest validation memory
+## Digest validation memory (source-only, unreleased)
 
 `input_digest` still serializes the complete value to preserve its `pyjson-v1`
 format and reject cycles before validation. Its strict JSON-type validation now
@@ -270,9 +278,9 @@ python -m pytest -q
 
 Authorship: implementation, documentation and synthetic tests were produced by
 an AI assistant working on Anish's behalf. Anish has not personally reviewed or
-executed them. Early source release, not a published PyPI package. No adoption claim.
+executed them. Early release. The pinned 0.1.0 package is available on PyPI; later source changes are separate. No adoption claim.
 
-### JSON input files
+### JSON input files (source-only, unreleased)
 
 JSON and JSONL file readers now require regular files. The opened descriptor is
 checked before text is consumed. Symlinks to regular files remain supported.
