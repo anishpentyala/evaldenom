@@ -83,11 +83,24 @@ pair. Short trial lists are reused for membership checks; longer trial lists
 get per-case sets. Missing-identity and matched-identity checks avoid temporary
 full-population set differences and intersections.
 
-This reduces Python allocation for the coverage index, not the size of the
-exports or findings. Audit still holds parsed inputs, supplied-identity counts
-and the complete findings in memory. A mostly missing run can produce a large
-report. This is not a streaming audit or a hard RAM cap, and extra Python
-membership checks can cost time. Verdicts and finding order are unchanged.
+The native `audit` CLI now reads each JSONL run one record at a time, opening
+only the run currently being checked. It no longer retains every raw run export.
+`read_jsonl(path)` still returns a list for Python callers; `freeze` and the
+Promptfoo JSON adapter retain their existing materialized behavior.
+
+Audit still holds the manifest, current run's supplied-identity counts and all
+completed findings in memory. One record can itself be large, and a mostly
+missing run can produce a large report. This is not a hard RAM cap or bounded
+memory for arbitrary logs. All runs must finish before any report is published.
+For invalid inputs, the first error encountered during sequential validation can
+now be reported before a decoding error later in the same or a later run.
+Verdicts and finding order for usable inputs are unchanged.
+
+On a local synthetic whole-CLI fixture with four 8,000-record runs and four
+metrics per record, three fresh-process tracemalloc peaks fell from about
+92.2 MB to 7.5 MB. Median instrumented time was 3.09 s before and 2.63 s after.
+The reports matched byte for byte. These are fixture-specific Python-allocation
+measurements, not RSS limits or general speed promises.
 
 ## Digest validation memory
 
