@@ -1,11 +1,12 @@
 """Offline CLI. Input errors do not replace an existing output."""
+from contextlib import ExitStack
 import argparse
 import json
 import os
 import sys
 from pathlib import Path
 import tempfile
-from .core import InputError, audit, freeze, read_json, read_jsonl
+from .core import InputError, audit, freeze, read_json, read_jsonl, _iter_jsonl
 
 
 def _write_text(stream, text):
@@ -91,23 +92,28 @@ def main(argv=None):
                 raise InputError('output must not replace an input')
             result = manifest_from_inline_tests(read_json(args.tests), grader=args.grader)
         else:
-            runs = {}
-            for item in args.run:
-                name, sep, path = item.partition('=')
-                if not sep or not name or not path or name in runs:
-                    raise InputError('run labels must be unique NAME=FILE entries')
-                runs[name] = read_json(path) if args.command == 'promptfoo-audit' else read_jsonl(path)
-            inputs = ({Path(args.manifest).resolve()}
-                      | {Path(item.partition('=')[2]).resolve() for item in args.run})
-            if args.command == 'promptfoo-audit':
-                inputs.add(Path(args.selections).resolve())
-            if args.output and Path(args.output).resolve() in inputs:
-                raise InputError('output must not replace an input')
-            if args.command == 'promptfoo-audit':
-                from .promptfoo import audit_promptfoo_exports
-                result = audit_promptfoo_exports(read_json(args.manifest), runs, read_json(args.selections))
-            else:
-                result = audit(read_json(args.manifest), runs)
+            with ExitStack() as streams:
+                runs = {}
+                for item in args.run:
+                    name, sep, path = item.partition('=')
+                    if not sep or not name or not path or name in runs:
+                        raise InputError('run labels must be unique NAME=FILE entries')
+                    if args.command == 'promptfoo-audit':
+                        runs[name] = read_json(path)
+                    else:
+                        runs[name] = _iter_jsonl(path)
+                        streams.callback(runs[name].close)
+                inputs = ({Path(args.manifest).resolve()}
+                          | {Path(item.partition('=')[2]).resolve() for item in args.run})
+                if args.command == 'promptfoo-audit':
+                    inputs.add(Path(args.selections).resolve())
+                if args.output and Path(args.output).resolve() in inputs:
+                    raise InputError('output must not replace an input')
+                if args.command == 'promptfoo-audit':
+                    from .promptfoo import audit_promptfoo_exports
+                    result = audit_promptfoo_exports(read_json(args.manifest), runs, read_json(args.selections))
+                else:
+                    result = audit(read_json(args.manifest), runs)
         text = json.dumps(result, sort_keys=True, indent=2, allow_nan=False) + '\n'
         if args.output:
             _write(args.output, text)
